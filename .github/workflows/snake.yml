@@ -1,4 +1,4 @@
-name: Generate contribution snake
+name: Generate modern contribution snake
 
 on:
   schedule:
@@ -11,18 +11,21 @@ permissions:
 jobs:
   generate:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
-      - name: Generate snake
+      - name: Generate contribution snake
         uses: Platane/snk@v3
         with:
           github_user_name: Narsing-s
           outputs: |
             dist/github-contribution-grid-snake.svg
             dist/github-contribution-grid-snake-dark.svg?palette=github-dark
-      - name: Publish to output branch
-        uses: crazy-max/ghaction-github-pages@v4
+
+      - name: Publish snake to output branch
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          build_dir: dist
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BUILD_DIR: dist
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: output
+          publish_dir: ./dist
+          force_orphan: true
+          commit_message: "chore: update contribution snake"
