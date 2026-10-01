@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="360" viewBox="0 0 1600 360">
+<defs>
+  <linearGradient id="g" x1="0" x2="1">
+    <stop offset="0" stop-color="#161b22"/>
+    <stop offset="0.5" stop-color="#242938"/>
+    <stop offset="1" stop-color="#0d1117"/>
+  </linearGradient>
+</defs>
+<rect width="1600" height="360" rx="24" fill="url(#g)"/>
+<circle cx="1420" cy="70" r="130" fill="#8250df" opacity=".16"/>
+<circle cx="1520" cy="250" r="180" fill="#00A0DF" opacity=".10"/>
+<text x="90" y="125" fill="#fff" font-family="Arial, sans-serif" font-size="52" font-weight="700">Hey, I'm Narsingarao 👋</text>
+<text x="90" y="185" fill="#c9d1d9" font-family="Arial, sans-serif" font-size="27">MuleSoft Production Support Engineer • Integration Specialist</text>
+<text x="90" y="235" fill="#8b949e" font-family="Arial, sans-serif" font-size="22">APIs • SQL • PostgreSQL • DevOps • AI • Open Source</text>
+<text x="90" y="300" fill="#58a6ff" font-family="Arial, sans-serif" font-size="20">Building, supporting and improving production-grade systems.</text>
+</svg>
