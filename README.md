@@ -54,7 +54,7 @@
 
 <div align="center">
 
-  ![Snake animation](https://github.com/Narsing-s/Narsing-s/blob/output/github-contribution-grid-snake-dark.svg)
+  ![Snake animation](https://raw.githubusercontent.com/Narsing-s/Narsing-s/output/github-contribution-grid-snake-dark.svg)
 
   ---
 
