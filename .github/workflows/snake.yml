@@ -15,19 +15,19 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Generate modern GitHub contribution snake
+      - name: Generate modern contribution snake
         uses: Platane/snk@v3
         with:
           github_user_name: Narsing-s
           outputs: |
-            dist/github-contribution-grid-snake.svg?color_snake=#7c3aed&color_dots=#161b22,#30363d,#22c55e,#06b6d4,#a855f7
+            dist/github-contribution-grid-snake.svg?color_snake=#a855f7&color_dots=#161b22,#30363d,#22c55e,#06b6d4,#a855f7
             dist/github-contribution-grid-snake-dark.svg?palette=github-dark&color_snake=#a855f7
 
-      - name: Publish to output branch
+      - name: Publish generated snake to output branch
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: output
           publish_dir: ./dist
           force_orphan: true
-          commit_message: "chore: update contribution snake"
+          commit_message: "chore: regenerate modern contribution snake"
