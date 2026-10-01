@@ -1,6 +1,6 @@
-<h2>A little more about me... <img src="https://raw.githubusercontent.com/Narsing-s/Narsing-s/main/assets/typing-cat.svg" width="50"></h2>
+<h2>A little more about me... <img src="assets/typing-cat.svg" width="50"></h2>
 
-<img src="assets/header-banner.svg" width="100%" alt="Hey, I'm Narsingarao — MuleSoft Production Support Engineer, Integration Specialist and Open Source Builder." />
+<img src="assets/header-banner.svg" width="100%" alt="Hey, I'm Narsingarao — MuleSoft Production Support Engineer and Integration Specialist building reliable APIs, integrations and modern developer tools." />
 
 <div align="center">
 
@@ -10,7 +10,6 @@
 </div>
 
 ## Featured Projects
-
 <div align="center">
 <table>
   <tr>
@@ -50,15 +49,16 @@
     </td>
   </tr>
 </table>
+
 </div>
 
 <div align="center">
 
-  ![Snake animation](https://raw.githubusercontent.com/Narsing-s/Narsing-s/output/github-contribution-grid-snake-dark.svg)
+  ![Snake animation](https://github.com/Narsing-s/Narsing-s/blob/output/github-contribution-grid-snake-dark.svg)
 
   ---
 
-  #### <img src="https://raw.githubusercontent.com/Narsing-s/Narsing-s/main/assets/yapping-cat.svg" height="30"> <em><b>Thanks for stopping by — building reliable integrations, production systems and open-source tools. 👨🏻‍💻</b></em>
+  #### <img src="assets/yapping-cat.svg" height="30"> <em><b>Thanks for stopping by — building reliable integrations, production systems and open-source tools. 👨🏻‍💻 &lt;3</em>
 
   ![](https://komarev.com/ghpvc/?username=Narsing-s&color=blueviolet)
 
