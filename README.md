@@ -15,6 +15,10 @@ Building reliable APIs, integrations, automation and developer tools.
 <img src="https://github-stats-extended.vercel.app/api/top-langs/?username=Narsing-s&langs_count=20&theme=dracula&hide_border=true&include_all_commits=true&count_private=true&layout=compact" alt="Top languages" />
 </div>
 
+## 🐍 Contribution Activity
+
+<div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Narsing-s/Narsing-s/output/github-contribution-grid-snake-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Narsing-s/Narsing-s/output/github-contribution-grid-snake.svg"><img alt="GitHub contribution snake animation" src="https://raw.githubusercontent.com/Narsing-s/Narsing-s/output/github-contribution-grid-snake-dark.svg" width="100%"></picture></div>
+
 ## ⚡ What I Do
 
 - 🔧 **MuleSoft Production Support** — L2/L3 incident analysis, troubleshooting, RCA and production stability
@@ -41,10 +45,6 @@ Building reliable APIs, integrations, automation and developer tools.
 <div align="center">
 <table><tr><td><a href="https://github.com/Narsing-s/muleforge"><img src="https://github-stats-extended.vercel.app/api/pin/?username=Narsing-s&theme=dracula&hide_border=true&show_icons=true&repo=muleforge" alt="MuleForge" /></a></td><td><a href="https://github.com/Narsing-s/sql-from-zero-to-advanced"><img src="https://github-stats-extended.vercel.app/api/pin/?username=Narsing-s&theme=dracula&hide_border=true&show_icons=true&repo=sql-from-zero-to-advanced" alt="SQL From Zero to Advanced" /></a></td></tr><tr><td><a href="https://github.com/Narsing-s/real-bank-api"><img src="https://github-stats-extended.vercel.app/api/pin/?username=Narsing-s&theme=dracula&hide_border=true&show_icons=true&repo=real-bank-api" alt="Real Bank API" /></a></td><td><a href="https://github.com/Narsing-s/afterimage-context"><img src="https://github-stats-extended.vercel.app/api/pin/?username=Narsing-s&theme=dracula&hide_border=true&show_icons=true&repo=afterimage-context" alt="Afterimage" /></a></td></tr><tr><td><a href="https://github.com/Narsing-s/global-messanger"><img src="https://github-stats-extended.vercel.app/api/pin/?username=Narsing-s&theme=dracula&hide_border=true&show_icons=true&repo=global-messanger" alt="Global Messenger" /></a></td><td><a href="https://github.com/Narsing-s/universal-banking-api"><img src="https://github-stats-extended.vercel.app/api/pin/?username=Narsing-s&theme=dracula&hide_border=true&show_icons=true&repo=universal-banking-api" alt="Universal Banking API" /></a></td></tr></table>
 </div>
-
-## 🐍 Contribution Activity
-
-<div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Narsing-s/Narsing-s/output/github-contribution-grid-snake-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Narsing-s/Narsing-s/output/github-contribution-grid-snake.svg"><img alt="GitHub contribution snake animation" src="https://raw.githubusercontent.com/Narsing-s/Narsing-s/output/github-contribution-grid-snake-dark.svg" width="100%"></picture></div>
 
 ## 🔭 Currently Building
 
