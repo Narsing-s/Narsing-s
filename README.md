@@ -1,9 +1,3 @@
-<div align="center">
-
-<img src="assets/ns-profile.svg" width="320" alt="NS — Narsingarao profile mark" />
-
-</div>
-
 <h2>A little more about me... <img src="assets/typing-cat.svg" width="50"></h2>
 
 <img src="assets/header-banner.svg" width="100%" alt="Hey, I'm Narsingarao — MuleSoft Production Support Engineer and Integration Specialist building reliable APIs, integrations and modern developer tools." />
