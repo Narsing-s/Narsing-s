@@ -11,39 +11,79 @@ Building reliable APIs, integrations, automation and developer tools.
 ## 📊 GitHub Activity
 
 <div align="center">
-<img src="https://stats.tosh1ki.de/api?show_bg=1&username=Narsing-s&theme=dracula&hide_border=true&show_icons=true&include_all_commits=true&count_private=true" alt="GitHub statistics" />
-<img src="https://github-stats-extended.vercel.app/api/top-langs/?username=Narsing-s&langs_count=20&theme=dracula&hide_border=true&include_all_commits=true&count_private=true&layout=compact" alt="Top languages" />
+
+<a href="https://github.com/Narsing-s">
+  <img height="180" src="https://stats.tosh1ki.de/api?username=Narsing-s&show_icons=true&theme=dracula&hide_border=true&include_all_commits=true&count_private=true" alt="Narsing-s GitHub stats" />
+</a>
+<a href="https://github.com/Narsing-s">
+  <img height="180" src="https://github-stats-extended.vercel.app/api/top-langs/?username=Narsing-s&layout=compact&langs_count=10&theme=dracula&hide_border=true&count_private=true" alt="Top languages" />
+</a>
+
+<br/>
+
+<img src="https://github-readme-streak-stats.herokuapp.com/?user=Narsing-s&theme=dracula&hide_border=true" alt="GitHub streak" />
+
 </div>
 
 ## 🐍 Contribution Activity
 
-<div align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Narsing-s/Narsing-s/output/github-contribution-grid-snake-dark.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Narsing-s/Narsing-s/output/github-contribution-grid-snake.svg"><img alt="GitHub contribution snake animation" src="https://raw.githubusercontent.com/Narsing-s/Narsing-s/output/github-contribution-grid-snake-dark.svg" width="100%"></picture></div>
+<div align="center">
+
+<p><b>Consistent contributions • continuous learning • open-source building</b></p>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Narsing-s/Narsing-s/output/github-contribution-grid-snake-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Narsing-s/Narsing-s/output/github-contribution-grid-snake.svg">
+  <img src="https://raw.githubusercontent.com/Narsing-s/Narsing-s/output/github-contribution-grid-snake-dark.svg" width="100%" alt="GitHub contribution snake animation">
+</picture>
+
+</div>
 
 ## ⚡ What I Do
 
-- 🔧 **MuleSoft Production Support** — L2/L3 incident analysis, troubleshooting, RCA and production stability
-- 🔌 **API & Integration Support** — Mule 4, DataWeave, RAML, HTTP APIs and enterprise integrations
-- 📡 **Enterprise Messaging** — IBM MQ, IBM MFT and integration connectivity troubleshooting
-- 📊 **Observability** — Anypoint Monitoring, Runtime Manager, Dynatrace and ELK
-- 🚀 **CI/CD & Releases** — Git, GitHub Actions, deployment validation and production hypercare
-- 🗄️ **Data & Backend** — SQL, PostgreSQL, Snowflake and backend APIs
-- 🧰 **Open Source** — developer tools, learning platforms and practical integration projects
+<div align="center">
+
+| 🔧 **Production Support** | 🔌 **Integration Engineering** | 📊 **Observability** |
+|---|---|---|
+| L2/L3 incident analysis<br>RCA & troubleshooting<br>Production stability | Mule 4 • DataWeave<br>RAML • APIs<br>Enterprise integrations | Anypoint Monitoring<br>Runtime Manager<br>Dynatrace • ELK |
+
+| 📡 **Enterprise Messaging** | 🚀 **CI/CD & Releases** | 🗄️ **Data & Backend** |
+|---|---|---|
+| IBM MQ • IBM MFT<br>DataPower<br>Connectivity troubleshooting | Git • GitHub Actions<br>Deployment validation<br>Production hypercare | Java • Node.js<br>SQL • PostgreSQL<br>Snowflake • REST APIs |
+
+</div>
 
 ## 🛠️ Technology Stack
 
-| Area | Technologies |
-|---|---|
-| Integration | MuleSoft, Mule 4, DataWeave, RAML, Anypoint Platform |
-| Enterprise | SAP, Salesforce, EDI, IBM MQ, IBM MFT, DataPower |
-| Backend | Java, Node.js, REST APIs |
-| Data | SQL, PostgreSQL, Snowflake |
-| DevOps | Git, GitHub Actions, Docker, CI/CD |
-| Monitoring | Anypoint Monitoring, Runtime Manager, Dynatrace, ELK |
+<div align="center">
+
+![MuleSoft](https://img.shields.io/badge/MuleSoft-00A1DF?style=for-the-badge&logo=mulesoft&logoColor=white)
+![Mule 4](https://img.shields.io/badge/Mule_4-00A1DF?style=for-the-badge)
+![DataWeave](https://img.shields.io/badge/DataWeave-00A1DF?style=for-the-badge)
+![Java](https://img.shields.io/badge/Java-17-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-20+-339933?style=for-the-badge&logo=node.js&logoColor=white)
+![SQL](https://img.shields.io/badge/SQL-336791?style=for-the-badge&logo=postgresql&logoColor=white)
+![Snowflake](https://img.shields.io/badge/Snowflake-29B5E8?style=for-the-badge&logo=snowflake&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)
+![IBM MQ](https://img.shields.io/badge/IBM_MQ-052FAD?style=for-the-badge)
+![Dynatrace](https://img.shields.io/badge/Dynatrace-1496FF?style=for-the-badge&logo=dynatrace&logoColor=white)
+
+</div>
 
 ## 🚀 Featured Projects
 
 <div align="center">
-<table><tr><td><a href="https://github.com/Narsing-s/muleforge"><img src="https://github-stats-extended.vercel.app/api/pin/?username=Narsing-s&theme=dracula&hide_border=true&show_icons=true&repo=muleforge" alt="MuleForge" /></a></td><td><a href="https://github.com/Narsing-s/sql-from-zero-to-advanced"><img src="https://github-stats-extended.vercel.app/api/pin/?username=Narsing-s&theme=dracula&hide_border=true&show_icons=true&repo=sql-from-zero-to-advanced" alt="SQL From Zero to Advanced" /></a></td></tr><tr><td><a href="https://github.com/Narsing-s/real-bank-api"><img src="https://github-stats-extended.vercel.app/api/pin/?username=Narsing-s&theme=dracula&hide_border=true&show_icons=true&repo=real-bank-api" alt="Real Bank API" /></a></td><td><a href="https://github.com/Narsing-s/afterimage-context"><img src="https://github-stats-extended.vercel.app/api/pin/?username=Narsing-s&theme=dracula&hide_border=true&show_icons=true&repo=afterimage-context" alt="Afterimage" /></a></td></tr><tr><td><a href="https://github.com/Narsing-s/global-messanger"><img src="https://github-stats-extended.vercel.app/api/pin/?username=Narsing-s&theme=dracula&hide_border=true&show_icons=true&repo=global-messanger" alt="Global Messenger" /></a></td><td><a href="https://github.com/Narsing-s/universal-banking-api"><img src="https://github-stats-extended.vercel.app/api/pin/?username=Narsing-s&theme=dracula&hide_border=true&show_icons=true&repo=universal-banking-api" alt="Universal Banking API" /></a></td></tr></table>
+
+| 🧩 Project | 🎯 Focus |
+|---|---|
+| [**MuleForge**](https://github.com/Narsing-s/muleforge) | Mule 4 project generation & developer tooling |
+| [**SQL From Zero to Advanced**](https://github.com/Narsing-s/sql-from-zero-to-advanced) | Structured SQL learning & practical labs |
+| [**Real Bank API**](https://github.com/Narsing-s/real-bank-api) | Banking APIs & integration workflows |
+| [**Afterimage**](https://github.com/Narsing-s/afterimage-context) | Context & memory-focused productivity tooling |
+| [**Global Messenger**](https://github.com/Narsing-s/global-messanger) | Self-hosted real-time communication |
+| [**Universal Banking API**](https://github.com/Narsing-s/universal-banking-api) | Banking integration APIs |
+
 </div>
 
 ## 🔭 Currently Building
