@@ -54,7 +54,11 @@
 
 <div align="center">
 
-  <picture>\n  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Narsing-s/Narsing-s/output/github-contribution-grid-snake-dark.svg">\n  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Narsing-s/Narsing-s/output/github-contribution-grid-snake.svg">\n  <img alt="GitHub contribution snake animation" src="https://raw.githubusercontent.com/Narsing-s/Narsing-s/output/github-contribution-grid-snake-dark.svg" width="100%">\n</picture>
+  <picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Narsing-s/Narsing-s/output/github-contribution-grid-snake-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Narsing-s/Narsing-s/output/github-contribution-grid-snake.svg">
+  <img alt="GitHub contribution snake animation" src="https://raw.githubusercontent.com/Narsing-s/Narsing-s/output/github-contribution-grid-snake-dark.svg" width="100%">
+</picture>
 
   ---
 
