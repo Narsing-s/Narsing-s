@@ -43,8 +43,8 @@
       </a>
     </td>
     <td align="center">
-      <a href="https://github.com/Narsing-s/dw-ai-copilot">
-        <img src="https://github-stats-extended.vercel.app/api/pin/?username=Narsing-s&theme=dracula&hide_border=true&show_icons=true&repo=dw-ai-copilot" alt="DataWeave AI Copilot" />
+      <a href="https://github.com/Narsing-s/universal-banking-api">
+        <img src="https://github-stats-extended.vercel.app/api/pin/?username=Narsing-s&theme=dracula&hide_border=true&show_icons=true&repo=universal-banking-api" alt="Universal Banking API" />
       </a>
     </td>
   </tr>
