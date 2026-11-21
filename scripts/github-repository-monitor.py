@@ -228,16 +228,32 @@ def main():
                 f"{x.get('path','')} ({x.get('count',0)})" for x in r["paths"][:5]
             ))
     def plain_activity(title, items):
-        text_lines.extend(["", title])
-        if not items:
-            text_lines.append("No matching activity found.")
+        text_lines.extend(["", title, "=" * len(title)])
+        headers = ["DATE / TIME (UTC)", "USERNAME", "ACTION", "REPOSITORY", "ITEM / TITLE", "COUNT", "DIRECT LINK"]
+        rows = []
         for a in items[:80]:
-            count = f" ({a['count']} similar events grouped)" if a.get("count", 1) > 1 else ""
-            subject = f" | {a['subject']}" if a["subject"] else ""
-            text_lines.append(
-                f"{a['created']} | @{a['actor']} | {a['detail']} | {a['repo']}"
-                f"{subject}{count} | {a['url']}"
-            )
+            rows.append([
+                a.get("created", "").replace("T", " ")[:19],
+                "@" + a.get("actor", "unknown"),
+                a.get("detail", ""),
+                a.get("repo", ""),
+                a.get("subject", ""),
+                str(a.get("count", 1)) if a.get("count", 1) > 1 else "",
+                a.get("url", ""),
+            ])
+        widths = [min(max(len(headers[i]), *(len(row[i]) for row in rows)) if rows else len(headers[i]), 34)
+                  for i in range(len(headers))]
+        def cell(value, width):
+            value = str(value).replace("\\n", " ").replace("\\r", " ")
+            return value if len(value) <= width else value[:width-1] + "…"
+        def table_line(row):
+            return "| " + " | ".join(cell(row[i], widths[i]).ljust(widths[i]) for i in range(len(headers))) + " |"
+        text_lines.append(table_line(headers))
+        text_lines.append("|-" + "-|-".join("-" * w for w in widths) + "-|")
+        if not rows:
+            text_lines.append("| " + "No matching activity found.".ljust(sum(widths) + 3 * (len(widths)-1)) + " |")
+        else:
+            text_lines.extend(table_line(row) for row in rows)
     plain_activity("ACTIVITY BY OTHER PEOPLE", people_activity)
     plain_activity("YOUR ACTIVITY", owner_activity)
     plain_activity("AUTOMATION / BOT ACTIVITY (GROUPED)", bot_activity)
@@ -321,19 +337,23 @@ def main():
 
     def add_activity_section(title, items, bot_group=False):
         parts.append(f"<div class='section'><h2>{esc(title)} <span class='pill'>{len(items)}</span></h2>")
+        parts.append("<div class='scroll'><table><thead><tr><th>Date / time (UTC)</th><th>Username</th><th>Action</th><th>Repository</th><th>Item / title</th><th>Count</th><th>Link</th></tr></thead><tbody>")
         if not items:
-            parts.append("<p class='small'>No matching activity found in the recent public event feed.</p>")
+            parts.append("<tr><td colspan='7' class='small'>No matching activity found in the recent public event feed.</td></tr>")
         for a in items[:80]:
-            subject = f" — {esc(a['subject'])}" if a["subject"] else ""
-            number = f" · #{a['number']}" if a.get("number") else ""
-            count = f" · {a['count']} similar events grouped" if a.get("count", 1) > 1 else ""
+            subject = esc(a.get("subject") or (f"#{a['number']}" if a.get("number") else "—"))
+            count = a.get("count", 1)
+            count_text = str(count) if count > 1 else "1"
+            link_label = "Open item" if a.get("number") or a.get("subject") else "Open repository"
             parts.append(
-                f"<div class='activity'><b>@{esc(a['actor'])}</b> {esc(a['detail'])}{number}"
-                f" in <a href='https://github.com/{esc(a['repo'])}'>{esc(a['repo'])}</a>{subject}{count}"
-                f"<br><span class='small'>{esc(a['created'])} · "
-                f"<a href='{esc(a['url'])}'>Open issue / pull request / item</a></span></div>"
+                f"<tr><td>{esc(a.get('created','').replace('T',' ')[:19])}</td>"
+                f"<td><b>@{esc(a.get('actor','unknown'))}</b></td>"
+                f"<td>{esc(a.get('detail',''))}</td>"
+                f"<td><a href='https://github.com/{esc(a.get('repo',''))}'>{esc(a.get('repo',''))}</a></td>"
+                f"<td>{subject}</td><td>{count_text}</td>"
+                f"<td><a href='{esc(a.get('url',''))}'>{link_label}</a></td></tr>"
             )
-        parts.append("</div>")
+        parts.append("</tbody></table></div></div>")
     add_activity_section("Activity by other people", people_activity)
     add_activity_section("Your activity", owner_activity)
     add_activity_section("Automation and bot activity (repetitions grouped)", bot_activity, True)
