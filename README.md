@@ -21,6 +21,12 @@
 
 ---
 
+## 🌐 Personal portfolio
+
+Explore the interactive portfolio: **[narsing-s.github.io](https://narsing-s.github.io/)** *(available after GitHub Pages is enabled and the manual deployment workflow completes)*.
+
+The portfolio includes an animated API integration map, skill dashboard, filterable project gallery, engineering lifecycle, responsive layout, light/dark theme, and live public GitHub profile metrics.
+
 ## ◈ My engineering focus
 
 I work across the full integration lifecycle: understanding business requirements, designing and developing Mule applications, connecting enterprise systems, and keeping integrations reliable in production.
