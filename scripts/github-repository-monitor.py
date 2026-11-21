@@ -282,6 +282,11 @@ def main():
         "",
         "Note: daily unique counts are summed across days and are not a deduplicated 14-day person count. "
         "GitHub does not identify people who only view or clone repositories. Public event feeds are incomplete/delayed.",
+        "",
+        "Regards,",
+        "Narsing Beesetti",
+        "MuleSoft Developer | Integration Development & Production Support",
+        "GitHub: https://github.com/Narsing-s",
     ]
     plain = "\n".join(text_lines)
 
@@ -382,7 +387,7 @@ def main():
         for warning in WARNINGS[:30]:
             parts.append(f"<li class='small'>{esc(warning)}</li>")
         parts.append("</ul></div>")
-    parts.append("""<p class="small">*Daily unique values are summed across days; they are not a deduplicated 14-day count of individual people. GitHub does not reveal identities of people who only view or clone repositories. Public events may be delayed or incomplete. Traffic is limited to GitHub's recent 14-day window.</p></div></body></html>""")
+    parts.append("""<p class="small">*Daily unique values are summed across days; they are not a deduplicated 14-day count of individual people. GitHub does not reveal identities of people who only view or clone repositories. Public events may be delayed or incomplete. Traffic is limited to GitHub's recent 14-day window.</p><div class="section"><p>Regards,<br><b>Narsing Beesetti</b><br>MuleSoft Developer | Integration Development &amp; Production Support<br><a href="https://github.com/Narsing-s">GitHub: github.com/Narsing-s</a></p></div></div></body></html>""")
     html_body = "".join(parts)
 
     msg = EmailMessage()
