@@ -10,6 +10,12 @@ from datetime import datetime, timezone
 from email.message import EmailMessage
 
 OWNER = "Narsing-s"
+PROFILE_HEADLINE = os.environ.get(
+    "PROFILE_HEADLINE",
+    "Building reliable integrations, production systems and open-source tools."
+)
+# Manually supplied snapshot; GitHub's official API does not expose profile views.
+PROFILE_VIEWS_SNAPSHOT = os.environ.get("PROFILE_VIEWS_SNAPSHOT", "389")
 TOKEN = os.environ["GH_MONITOR_TOKEN"]
 API = "https://api.github.com"
 HEADERS = {
@@ -200,7 +206,8 @@ def main():
         f"GITHUB REPOSITORY INTELLIGENCE — {stamp}",
         f"Owner: {OWNER} | Repositories: {len(repos)}",
         "",
-        "PROFILE VIEWS: Not available — GitHub does not expose profile-page view analytics via its API.",
+        f"PROFILE: {PROFILE_HEADLINE}",
+        f"PROFILE VIEWS: {PROFILE_VIEWS_SNAPSHOT} (manual snapshot supplied 21 Nov 2026; not live API data).",
         "",
         f"TOTALS: {totals['views']} repository views; {totals['daily_unique']} summed daily unique views; "
         f"{totals['clones']} clones; {totals['daily_clone_unique']} summed daily unique cloners; "
@@ -296,7 +303,8 @@ def main():
     <div class="metric"><span>Stars · current total</span><b>{totals['stars']:,}</b></div>
     <div class="metric"><span>Forks · current total</span><b>{totals['forks']:,}</b></div>
     </div>
-    <div class="notice"><b>Profile views:</b> GitHub does not provide profile-page view counts through its official API. Repository traffic is available for {available} of {len(reports)} repositories. A missing traffic result is not the same as zero views.</div>
+    <div class="section"><h2>GitHub profile</h2><p><b>Headline:</b> {esc(PROFILE_HEADLINE)}</p><p><b>Profile views:</b> {esc(PROFILE_VIEWS_SNAPSHOT)} <span class="small">(manual snapshot supplied 21 Nov 2026; not a live API count)</span></p><p class="small">GitHub's official API does not expose profile-page view analytics. Update PROFILE_VIEWS_SNAPSHOT when you have a newer count.</p></div>
+    <div class="notice"><b>Repository traffic:</b> available for {available} of {len(reports)} repositories. A missing traffic result is not the same as zero views.</div>
     <div class="section"><h2>Repository overview</h2><div class="scroll"><table><thead><tr><th>Repository</th><th>Views</th><th>Daily uniques*</th><th>Clones</th><th>Stars</th><th>Forks</th></tr></thead><tbody>"""]
     for r in sorted(reports, key=lambda x: x["views"], reverse=True):
         parts.append(
