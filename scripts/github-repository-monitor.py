@@ -44,60 +44,85 @@ def event_description(ev):
     typ = ev.get("type", "")
     p = ev.get("payload") or {}
     action = p.get("action", "")
-    issue = p.get("issue") or p.get("pull_request") or {}
+    issue = p.get("issue") or {}
     pr = p.get("pull_request") or {}
+    comment = p.get("comment") or {}
+    review = p.get("review") or {}
     release = p.get("release") or {}
     repo = ev.get("repo", {}).get("name", "")
     actor = (ev.get("actor") or {}).get("login", "unknown")
-    subject = issue.get("title") or release.get("name") or ""
-    url = issue.get("html_url") or release.get("html_url") or ("https://github.com/" + repo)
+    subject = issue.get("title") or pr.get("title") or release.get("name") or ""
+    number = issue.get("number") or pr.get("number")
+    url = (pr.get("html_url") or issue.get("html_url") or
+           comment.get("html_url") or review.get("html_url") or
+           release.get("html_url") or "")
     if typ == "WatchEvent":
-        detail = "starred this repository"
+        detail = "starred the repository"
     elif typ == "ForkEvent":
-        detail = "forked this repository"
-        if p.get("forkee", {}).get("full_name"):
-            subject = "Fork: " + p["forkee"]["full_name"]
+        detail = "forked the repository"
+        subject = (p.get("forkee") or {}).get("full_name") or subject
+        url = (p.get("forkee") or {}).get("html_url") or url
     elif typ == "IssuesEvent":
-        detail = f"{action or 'updated'} an issue"
+        detail = f"{action or 'updated'} issue"
     elif typ == "PullRequestEvent":
-        detail = f"{action or 'updated'} a pull request"
-        subject = pr.get("title") or subject
-        url = pr.get("html_url") or url
+        detail = f"{action or 'updated'} pull request"
     elif typ == "IssueCommentEvent":
         detail = "commented on an issue"
-        subject = (p.get("comment") or {}).get("body", "")[:180] or subject
+        subject = issue.get("title") or subject
+        url = comment.get("html_url") or issue.get("html_url") or url
     elif typ == "PullRequestReviewEvent":
-        review = p.get("review") or {}
-        detail = "reviewed a pull request"
-        subject = review.get("state", "") + (": " + subject if subject else "")
+        detail = f"submitted a {review.get('state', 'new').lower()} review"
+        subject = pr.get("title") or subject
+        url = review.get("html_url") or pr.get("html_url") or url
     elif typ == "PullRequestReviewCommentEvent":
-        detail = "commented on a pull request review"
-        subject = (p.get("comment") or {}).get("body", "")[:180] or subject
+        detail = "commented on a pull request"
+        subject = pr.get("title") or subject
+        url = comment.get("html_url") or pr.get("html_url") or url
     elif typ == "ReleaseEvent":
         detail = f"{action or 'published'} a release"
     elif typ == "PushEvent":
         commits = p.get("commits") or []
         detail = f"pushed {p.get('size', len(commits))} commit(s) to {p.get('ref', 'a branch')}"
-        subject = " · ".join(c.get("message", "").splitlines()[0] for c in commits[:3] if c.get("message"))
+        subject = " · ".join(c.get("message", "").splitlines()[0] for c in commits[:2] if c.get("message"))
+        if commits:
+            url = f"https://github.com/{repo}/commit/{commits[0].get('sha','')}"
     elif typ == "CreateEvent":
         detail = f"created {p.get('ref_type', 'a ref')} {p.get('ref') or ''}".strip()
     elif typ == "DeleteEvent":
         detail = f"deleted {p.get('ref_type', 'a ref')} {p.get('ref') or ''}".strip()
     elif typ == "PublicEvent":
-        detail = "made this repository public"
+        detail = "made the repository public"
     elif typ == "GollumEvent":
-        detail = "updated repository wiki pages"
-        subject = ", ".join(x.get("page_name", "") for x in p.get("pages", [])[:4])
+        detail = "updated repository wiki"
+        subject = ", ".join(x.get("page_name", "") for x in p.get("pages", [])[:3])
     elif typ == "CommitCommentEvent":
         detail = "commented on a commit"
-        subject = (p.get("comment") or {}).get("body", "")[:180]
+        subject = comment.get("body", "")[:140]
+        url = comment.get("html_url") or url
     else:
         detail = typ.replace("Event", " event") or "activity"
+    if number and not subject:
+        subject = f"#{number}"
+    if number and url and f"/{number}" not in url:
+        url = f"https://github.com/{repo}/{'pull' if typ == 'PullRequestEvent' or pr else 'issues'}/{number}"
     return {
-        "actor": actor, "repo": repo, "detail": detail,
-        "subject": subject, "url": url, "created": ev.get("created_at", ""),
-        "type": typ,
+        "id": str(ev.get("id", "")), "actor": actor, "repo": repo,
+        "detail": detail, "subject": subject, "number": number,
+        "url": url or f"https://github.com/{repo}", "created": ev.get("created_at", ""),
+        "type": typ, "is_bot": actor.endswith("[bot]"),
+        "is_owner": actor.lower() == OWNER.lower(),
     }
+
+def group_bot_activity(items):
+    grouped = {}
+    for item in items:
+        key = (item["actor"], item["repo"], item["detail"], item["subject"])
+        if key not in grouped:
+            grouped[key] = dict(item, count=0)
+        grouped[key]["count"] += 1
+        if item["created"] > grouped[key]["created"]:
+            grouped[key]["created"] = item["created"]
+    return sorted(grouped.values(), key=lambda x: x["created"], reverse=True)
 
 def fetch_repositories():
     result = []
@@ -153,7 +178,16 @@ def main():
             }:
                 activities.append(item)
 
-    activities.sort(key=lambda x: x["created"], reverse=True)
+    # De-duplicate events, then separate people, owner activity and automation.
+    unique = {}
+    for item in activities:
+        unique[item["id"] or f"{item['actor']}|{item['repo']}|{item['type']}|{item['created']}"] = item
+    activities = list(unique.values())
+    people_activity = [x for x in activities if not x["is_bot"] and not x["is_owner"]]
+    owner_activity = [x for x in activities if x["is_owner"]]
+    bot_activity = group_bot_activity([x for x in activities if x["is_bot"]])
+    for group in (people_activity, owner_activity):
+        group.sort(key=lambda x: x["created"], reverse=True)
     stamp = datetime.now(timezone.utc).strftime("%d %b %Y, %H:%M UTC")
     totals = {
         key: sum(r[key] for r in reports)
@@ -193,9 +227,20 @@ def main():
             text_lines.append("  Popular paths: " + ", ".join(
                 f"{x.get('path','')} ({x.get('count',0)})" for x in r["paths"][:5]
             ))
-    text_lines += ["", "RECENT PUBLIC ACTIVITY"]
-    for a in activities[:200]:
-        text_lines.append(f"{a['created']} — @{a['actor']} {a['detail']} in {a['repo']}: {a['subject']} ({a['url']})")
+    def plain_activity(title, items):
+        text_lines.extend(["", title])
+        if not items:
+            text_lines.append("No matching activity found.")
+        for a in items[:80]:
+            count = f" ({a['count']} similar events grouped)" if a.get("count", 1) > 1 else ""
+            subject = f" | {a['subject']}" if a["subject"] else ""
+            text_lines.append(
+                f"{a['created']} | @{a['actor']} | {a['detail']} | {a['repo']}"
+                f"{subject}{count} | {a['url']}"
+            )
+    plain_activity("ACTIVITY BY OTHER PEOPLE", people_activity)
+    plain_activity("YOUR ACTIVITY", owner_activity)
+    plain_activity("AUTOMATION / BOT ACTIVITY (GROUPED)", bot_activity)
     if WARNINGS:
         text_lines += ["", "DATA WARNINGS"] + [f"- {w}" for w in WARNINGS[:30]]
     text_lines += [
@@ -274,18 +319,24 @@ def main():
             parts.append("</table>")
         parts.append("</div>")
 
-    parts.append("<div class='section'><h2>Recent public activity</h2>")
-    if activities:
-        for a in activities[:200]:
+    def add_activity_section(title, items, bot_group=False):
+        parts.append(f"<div class='section'><h2>{esc(title)} <span class='pill'>{len(items)}</span></h2>")
+        if not items:
+            parts.append("<p class='small'>No matching activity found in the recent public event feed.</p>")
+        for a in items[:80]:
             subject = f" — {esc(a['subject'])}" if a["subject"] else ""
+            number = f" · #{a['number']}" if a.get("number") else ""
+            count = f" · {a['count']} similar events grouped" if a.get("count", 1) > 1 else ""
             parts.append(
-                f"<div class='activity'><b>@{esc(a['actor'])}</b> {esc(a['detail'])} "
-                f"in <a href='https://github.com/{esc(a['repo'])}'>{esc(a['repo'])}</a>{subject}"
-                f"<br><span class='small'>{esc(a['created'])} · <a href='{esc(a['url'])}'>Open event</a></span></div>"
+                f"<div class='activity'><b>@{esc(a['actor'])}</b> {esc(a['detail'])}{number}"
+                f" in <a href='https://github.com/{esc(a['repo'])}'>{esc(a['repo'])}</a>{subject}{count}"
+                f"<br><span class='small'>{esc(a['created'])} · "
+                f"<a href='{esc(a['url'])}'>Open issue / pull request / item</a></span></div>"
             )
-    else:
-        parts.append("<p class='small'>No matching public events were returned in the recent event feed.</p>")
-    parts.append("</div>")
+        parts.append("</div>")
+    add_activity_section("Activity by other people", people_activity)
+    add_activity_section("Your activity", owner_activity)
+    add_activity_section("Automation and bot activity (repetitions grouped)", bot_activity, True)
     if WARNINGS:
         parts.append("<div class='section'><h2>Data access warnings</h2><ul>")
         for warning in WARNINGS[:30]:
