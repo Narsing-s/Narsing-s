@@ -9,7 +9,8 @@ The report is sent as a responsive HTML email with a plain-text fallback. It inc
 - A portfolio overview with repository views, summed daily unique views, clones, current stars and current forks.
 - Per-repository daily view and clone breakdowns for the recent 14-day window.
 - Popular referrers and popular repository paths when GitHub returns them.
-- Recent public activity with actor, repository, event/action, available title or detail, timestamp, and link.
+- Recent public activity in structured tables in both HTML and plain-text email formats, with UTC date/time, username, action, repository, item title, grouped-event count, and link.
+- Separate tables for activity by other people, your own activity, and grouped automation/bot activity.
 - Data-access warnings where GitHub denies or does not return traffic data.
 
 The daily unique values are summed across dates. They are not a deduplicated count of distinct people over the full 14 days.
