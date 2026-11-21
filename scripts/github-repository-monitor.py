@@ -34,7 +34,19 @@ def get(path):
     except urllib.error.HTTPError as exc:
         detail = f"HTTP {exc.code}"
         if exc.code in (403, 404):
-            WARNINGS.append(f"{path}: {detail} — unavailable or insufficient token permission")
+            if "/traffic/" in path and exc.code == 403:
+                repo_name = path.split("/repos/", 1)[-1].split("/traffic/", 1)[0]
+                warning = (
+                    f"{repo_name}: GitHub denied repository traffic (HTTP 403). "
+                    "The GH_MONITOR_TOKEN must have access to this repository and "
+                    "Administration: Read permission (fine-grained PAT); the account "
+                    "must have write access to the repository. Update the GH_MONITOR_TOKEN "
+                    "Actions secret, then rerun the workflow."
+                )
+            else:
+                warning = f"{path}: {detail} — unavailable or insufficient token permission"
+            if warning not in WARNINGS:
+                WARNINGS.append(warning)
             return None
         body = exc.read().decode(errors="replace")[:300]
         WARNINGS.append(f"{path}: {detail} {body}")
