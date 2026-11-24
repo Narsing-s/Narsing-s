@@ -160,7 +160,7 @@ def traffic_for(repo):
     clones = get(f"/repos/{name}/traffic/clones")
     referrers = get(f"/repos/{name}/traffic/popular/referrers")
     paths = get(f"/repos/{name}/traffic/popular/paths")
-    pr_search = get(f"/search/issues?q=repo%3A{quote(name, safe="")}+is%3Aopen+is%3Apr")
+    pr_search = get(f"/search/issues?q=repo%3A{quote(name, safe='')}+is%3Aopen+is%3Apr")
     open_prs = (pr_search or {}).get("total_count")
     open_items = repo.get("open_issues_count", 0)
     view_days = (views or {}).get("views", [])
