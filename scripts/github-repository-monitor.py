@@ -6,6 +6,7 @@ import os
 import smtplib
 import urllib.request
 import urllib.error
+from urllib.parse import quote
 from datetime import datetime, timezone
 from email.message import EmailMessage
 
@@ -159,6 +160,9 @@ def traffic_for(repo):
     clones = get(f"/repos/{name}/traffic/clones")
     referrers = get(f"/repos/{name}/traffic/popular/referrers")
     paths = get(f"/repos/{name}/traffic/popular/paths")
+    pr_search = get(f"/search/issues?q=repo%3A{quote(name, safe="")}+is%3Aopen+is%3Apr")
+    open_prs = (pr_search or {}).get("total_count")
+    open_items = repo.get("open_issues_count", 0)
     view_days = (views or {}).get("views", [])
     clone_days = (clones or {}).get("clones", [])
     return {
@@ -166,7 +170,8 @@ def traffic_for(repo):
         "url": repo.get("html_url", "https://github.com/" + name),
         "stars": repo.get("stargazers_count", 0),
         "forks": repo.get("forks_count", 0),
-        "open_issues": repo.get("open_issues_count", 0),
+        "open_issues": max(0, open_items - open_prs) if open_prs is not None else None,
+        "open_prs": open_prs,
         "views": sum(x.get("count", 0) for x in view_days),
         "daily_unique": sum(x.get("uniques", 0) for x in view_days),
         "clones": sum(x.get("count", 0) for x in clone_days),
@@ -212,6 +217,34 @@ def main():
         for key in ("views", "daily_unique", "clones", "daily_clone_unique", "stars", "forks")
     }
     available = sum(1 for r in reports if r["traffic_available"])
+
+    # Publish a browser dashboard data snapshot alongside the email digest.
+    dashboard_data = {
+        "owner": OWNER,
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "profile_headline": PROFILE_HEADLINE,
+        "profile_views_snapshot": PROFILE_VIEWS_SNAPSHOT,
+        "totals": totals,
+        "repository_count": len(reports),
+        "traffic_available_repositories": available,
+        "repositories": reports,
+        "activities": {
+            "community": people_activity,
+            "owner": owner_activity,
+            "automation": bot_activity,
+        },
+        "warnings": WARNINGS,
+        "limitations": [
+            "GitHub traffic analytics cover only the most recent 14 days.",
+            "Daily unique values are summed across days and are not deduplicated people across the full period.",
+            "GitHub does not expose the identities of repository viewers or cloners.",
+            "Public repository event feeds may be incomplete or delayed.",
+            "Profile views are a manually supplied snapshot, not a live GitHub API metric."
+        ],
+    }
+    os.makedirs("dashboard", exist_ok=True)
+    with open("dashboard/data.json", "w", encoding="utf-8") as data_file:
+        json.dump(dashboard_data, data_file, ensure_ascii=False, separators=(",", ":"))
 
     # Plain-text alternative
     text_lines = [
@@ -308,11 +341,11 @@ def main():
     .activity{padding:10px 0;border-bottom:1px solid #edf0f5;font-size:13px;line-height:1.5}
     .activity:last-child{border:0}.small{font-size:12px;color:#68758b}
     .notice{background:#fff8e8;border:1px solid #f0dfb5;padding:12px;border-radius:9px;font-size:13px;line-height:1.5}
-    .scroll{overflow-wrap:anywhere}
+    .scroll{overflow-wrap:anywhere}.dash-link{display:inline-block;background:#2563eb;color:#fff!important;padding:12px 18px;border-radius:9px;font-weight:bold;margin-top:8px}
     @media(max-width:600px){.wrap{padding:10px 7px}.hero{padding:18px}.metric{min-width:40%}th,td{padding:7px 5px;font-size:12px}}
     """
     parts = [f"""<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>{css}</style></head><body><div class="wrap">
-    <div class="hero"><h1>GitHub Repository Intelligence</h1><div class="muted">{esc(OWNER)} · {esc(stamp)}</div><p>Traffic, discovery sources and public activity across {len(repos)} owned repositories.</p></div>
+    <div class="hero"><h1>GitHub Repository Intelligence</h1><div class="muted">{esc(OWNER)} · {esc(stamp)}</div><p>Traffic, discovery sources and public activity across {len(repos)} owned repositories.</p><a class="dash-link" href="https://narsing-s.github.io/Narsing-s/">Open Interactive Dashboard ↗</a></div>
     <div class="grid">
     <div class="metric"><span>Repository views · 14 days</span><b>{totals['views']:,}</b></div>
     <div class="metric"><span>Daily unique views summed*</span><b>{totals['daily_unique']:,}</b></div>
