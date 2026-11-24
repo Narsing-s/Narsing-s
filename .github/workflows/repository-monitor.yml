@@ -7,6 +7,8 @@ on:
 
 permissions:
   contents: read
+  pages: write
+  id-token: write
 
 concurrency:
   group: github-repository-monitor
@@ -15,11 +17,11 @@ concurrency:
 jobs:
   report:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - name: Check out monitor
         uses: actions/checkout@v4
-      - name: Generate activity report and email it
+      - name: Generate analytics data and email report
         env:
           GH_MONITOR_TOKEN: ${{ secrets.GH_MONITOR_TOKEN }}
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
@@ -29,3 +31,18 @@ jobs:
           SMTP_FROM: ${{ secrets.SMTP_FROM }}
           REPORT_TO: ${{ secrets.REPORT_TO }}
         run: python3 scripts/github-repository-monitor.py
+      - name: Upload dashboard for GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dashboard/
+
+  deploy-dashboard:
+    needs: report
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy interactive dashboard
+        id: deployment
+        uses: actions/deploy-pages@v4
